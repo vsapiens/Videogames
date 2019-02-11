@@ -188,18 +188,15 @@ public class Player extends Item {
     public void setVelY(int velY) {
         this.velY = velY;
     }
-    
-    public Rectangle getPerimetro(Object obj)
-    {
-        
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
-    }
-    public Rectangle getPerimetro(Object obj)
-    {
-        
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
-    }
+     public Rectangle getPerimetro() {
 
+            return new Rectangle(getX(), getY(),getWidth(), getHeight());
+        }
+
+     public boolean intersecta(Balls obj) {
+
+            return getPerimetro().intersects(obj.getPerimetro());
+        }
     @Override
     public void tick() {
         //moving player depending on flags 

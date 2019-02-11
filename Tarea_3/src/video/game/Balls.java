@@ -6,6 +6,7 @@
 package video.game;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -81,6 +82,15 @@ public class Balls extends Item {
         this.speed = speed;
     }
 
+         public Rectangle getPerimetro() {
+
+            return new Rectangle(getX(), getY(),getWidth(), getHeight());
+        }
+
+     public boolean intersecta(Player obj) {
+
+            return getPerimetro().intersects(obj.getPerimetro());
+        }
 
     @Override
     public void tick() {
