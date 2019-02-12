@@ -97,7 +97,6 @@ public class Game implements Runnable{
         Assets.init();
         player = new Player(0, height-100, 1, 100, 100, this);
         int iPosY;
-        //enemy = 
         int iNum = (int) (Math.random() * 5)+3;
         
         for(int i = 1; i <= iNum; i++){

@@ -172,7 +172,6 @@ public class Game implements Runnable {
             if (player.getLives() == 0) {
                 setGameOver(true);
             }
-            
 
         }
 
@@ -197,13 +196,10 @@ public class Game implements Runnable {
                 for (int i = 1; i <= player.getLives(); i++) {
                     g.drawImage(Assets.lives, 30 * i, 10, 25, 25, null);
                 }
-
                 player.render(g);
                 enemy.render(g);
             } else {
-
                 g.drawImage(Assets.gameover, 0, 0, width, height, null);
-
             }
 
             bs.show();

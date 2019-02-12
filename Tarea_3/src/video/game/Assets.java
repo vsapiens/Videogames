@@ -12,28 +12,18 @@ import java.awt.image.BufferedImage;
  * @author ErickFrank
  */
 public class Assets {
-    public static BufferedImage player_FrozenMorty[];
     public static BufferedImage background; //to store background image
     public static BufferedImage player;//to store player image
+    public static BufferedImage lives; //to store images of live
+    public static BufferedImage gameover; //to store images of live
     
     /**
      * initializing the images of the game
      */
     public static void init(){
-     player_FrozenMorty = new BufferedImage[12];
      background = ImageLoader.loadImage("/images/Background.jpg");
-     player_FrozenMorty[0] = ImageLoader.loadImage("/images/FrozenMorty/Player_Left1.png");
-     player_FrozenMorty[1] = ImageLoader.loadImage("/images/FrozenMorty/Player_Left2.png");
-     player_FrozenMorty[2] = ImageLoader.loadImage("/images/FrozenMorty/Player_Left3.png");
-     player_FrozenMorty[3] = ImageLoader.loadImage("/images/FrozenMorty/Player_Right1.png");
-     player_FrozenMorty[4] = ImageLoader.loadImage("/images/FrozenMorty/Player_Right2.png");
-     player_FrozenMorty[5] = ImageLoader.loadImage("/images/FrozenMorty/Player_Right3.png");
-     player_FrozenMorty[6] = ImageLoader.loadImage("/images/FrozenMorty/Player_Up1.png");
-     player_FrozenMorty[7] = ImageLoader.loadImage("/images/FrozenMorty/Player_Up2.png");
-     player_FrozenMorty[8] = ImageLoader.loadImage("/images/FrozenMorty/Player_Up3.png");
-     player_FrozenMorty[9] = ImageLoader.loadImage("/images/FrozenMorty/Player_Down1.png");
-     player_FrozenMorty[10] = ImageLoader.loadImage("/images/FrozenMorty/Player_Down2.png");
-     player_FrozenMorty[11] = ImageLoader.loadImage("/images/FrozenMorty/Player_Down3.png");
-     
+     player = ImageLoader.loadImage("/images/Player.png");
+     lives = ImageLoader.loadImage("/images/lives.png"); 
+     gameover = ImageLoader.loadImage("/images/gameover.jpg"); 
     }
 }

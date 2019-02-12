@@ -50,11 +50,12 @@ public class KeyManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e){
         // set true to every key released
+        keys[e.getKeyCode()] = true;
     }
     @Override
     public void keyReleased(KeyEvent e){
         // set false to every key released
-        keys[e.getKeyCode()] = true;
+        keys[e.getKeyCode()] = false;
     }
     /**
      * to enable or disable moves on every tick
