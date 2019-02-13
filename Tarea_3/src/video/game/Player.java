@@ -16,7 +16,17 @@ public class Player extends Item {
     private boolean collision;
     private int score;
     private int lives;
-    
+    private int prevY;
+    /**
+     * To initialize the player with a specific x and y position and establish a
+     * width and height of the image
+     *
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param game
+     */
     public Player(int x, int y, int width, int height, Game game) {
         super(x, y);
         this.width = width;
@@ -26,7 +36,21 @@ public class Player extends Item {
         this.collision = false;
         this.score = 0;
         this.lives = 5;
-        
+        this.prevY = y;
+    }
+    /**
+     * To get the previous Y coordinate of the player
+     * @return prevY
+     */
+    public int getPrevY() {
+        return prevY;
+    }
+    /**
+     * To set the previous Y coordinate of the player
+     * @param prevY 
+     */
+    public void setPrevY(int prevY) {
+        this.prevY = prevY;
     }
     /**
      * To get the score of the player
@@ -69,9 +93,7 @@ public class Player extends Item {
      */
     public void setCollision(boolean collision) {
         this.collision = collision;
-
     }
-
     /**
      * To set the width of the game window
      *
@@ -105,8 +127,7 @@ public class Player extends Item {
     public int getSpeed() {
         return speed;
     }
-    
-    
+
     /**
      * To set the speed of the player
      *

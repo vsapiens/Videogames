@@ -20,13 +20,13 @@ public class Assets {
     public static SoundClip squeeze; //to store soundclip of collision
     
     /**
-     * initializing the images of the game
+     * initializing the images and sounds of the game
      */
     public static void init(){
      background = ImageLoader.loadImage("/images/Background.jpg");
      player = ImageLoader.loadImage("/images/Player.png");
      lives = ImageLoader.loadImage("/images/lives.png"); 
-     gameover = ImageLoader.loadImage("/images/gameover.jpg"); 
+     gameover = ImageLoader.loadImage("/images/gameover_1.png"); 
      bomb = new SoundClip("/sounds/blip.wav"); 
      squeeze = new SoundClip("/sounds/squeeze.wav"); 
     }

@@ -167,6 +167,8 @@ public class Game implements Runnable {
 
     private void tick() {
         
+        //if player has no more lives it sets gameover to true
+        
         if(player.getLives() == 0)
         {
          setGameover(true);   
@@ -178,16 +180,22 @@ public class Game implements Runnable {
             // avancing player with collision
             for (int i = 0; i < balls.size(); i++) {
                 
-                balls.get(i).tick();                
-                if(player.intersecta(balls.get(i)))
+                //sets the speed depending of the lives
+                balls.get(i).setSpeed((int)(Math.random() * ((8-player.getLives() - 1) + 1)) + 1);
+                
+                balls.get(i).tick();          
+                // if a player intersects the ball under the object it reboots the location and 
+                if(player.intersecta(balls.get(i)) && player.getPrevY() > balls.get(i).getY())
                 {
                    balls.get(i).reboot(); 
                    Assets.squeeze.play();
                    player.setScore(player.getScore()+100);
                 }
                 
+                //if the balls colides decreases scores in 20 and sets collision to false
                 if(balls.get(i).isCollision())
                 {
+                   
                    balls.get(i).setCollision(false);
                    
                    Assets.bomb.play();
@@ -196,21 +204,17 @@ public class Game implements Runnable {
                    
                    setFallen(getFallen()+1);
                    
-                   
+                   //if 10 obejects have fallen it takes out one live
                   if(getFallen() == 10)
                   {
                     player.setLives(player.getLives()-1); 
                     setFallen(0);
                   }
-                  
-                  
                 }
             }
         }
-        else {
-            
-           Assets.bomb.play();
-        }
+        //sets the previous y coordinate to the one in this tick
+        player.setPrevY(player.getY());
     }
 
     /**
@@ -229,11 +233,14 @@ public class Game implements Runnable {
             display.getCanvas().createBufferStrategy(3);
         } else {
             g = bs.getDrawGraphics();
+            //to set the background
             g.drawImage(Assets.background, 0, 0, width, height, null);
             
+            //to determine the font of the score
             g.setColor(Color.white);
-            
             g.setFont(new Font("Serif", Font.BOLD, 20));
+            
+            //renders player and lives
             if(!isGameover())
             {
               player.render(g);
@@ -246,10 +253,11 @@ public class Game implements Runnable {
             }
             g.drawString( " " + player.getScore() , 20, 50);
             }
+            //render the gameover picture and show the score
             else{
              
-              g.drawImage(Assets.gameover, this.getWidth()/2, this.getHeight()/2, 600, 450, null);
-              g.drawString( "Score: " + player.getScore() , getWidth()/2, getHeight()/3);
+              g.drawImage(Assets.gameover, 0, 0, width, height, null);
+              g.drawString( "Score: " + player.getScore() , getWidth(), getHeight());
             }
             
             bs.show();
