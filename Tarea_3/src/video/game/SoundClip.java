@@ -1,19 +1,20 @@
 
 package video.game;
 
-import java.io.IOException;
-import java.net.URL;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 /**
  *
  * @author ErickFrank
  */
-class SoundClip {
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioSystem;
+import java.io.IOException;
+import java.net.URL;
+
+public class SoundClip {
+
     private AudioInputStream sample;
     private Clip clip;
     private boolean looping = false;
@@ -161,10 +162,10 @@ class SoundClip {
 
     /**
      * Metodo que detiene el sonido.
-     * 
      */
     public void stop() {
         clip.stop();
     }
 
 }
+

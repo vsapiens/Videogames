@@ -1,5 +1,7 @@
 package video.game;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
@@ -22,7 +24,7 @@ public class Game implements Runnable {
     private KeyManager keyManager;      // to manage the keyboard
     private LinkedList<Ball> balls;     // to manage the falling objects
     private boolean gameover;           // to manage the lives of the player
-    private int fallen;           // to manage the lives of the player
+    private int fallen;                 // to manage the lives of the player
 
     @Override
     public void run() {
@@ -72,19 +74,31 @@ public class Game implements Runnable {
         this.gameover = false;
         this.fallen = 0;
     }
-    
+    /**
+     * To get the title of the game
+     * @return title
+     */
     public String getTitle() {
         return title;
     }
-
+/**
+ * To get the state of the game
+ * @return 
+ */
     public boolean isGameover() {
         return gameover;
     }
-
+    /**
+     * To set the state of the game
+     * @param gameover 
+     */
     public void setGameover(boolean gameover) {
         this.gameover = gameover;
     }
-
+    /**
+     * To set the title of the game
+     * @param title 
+     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -106,25 +120,33 @@ public class Game implements Runnable {
     public int getHeight() {
         return height;
     }
-
+    /**
+     * To get the fallen objects if the game
+     * @return fallen
+     */
     public int getFallen() {
         return fallen;
     }
-
+    /**
+     * To set the fallen 
+     * @param fallen 
+     */
     public void setFallen(int fallen) {
         this.fallen = fallen;
     }
-    
     /**
      * initializing the display window of the game
      */
     private void init() {
+        int iPosX, iPosY;
         display = new Display(title, getWidth(), getHeight());
         Assets.init();
-        player = new Player(0, getHeight() - 100, 100, 100, this);
+        player = new Player(getWidth()/2, getHeight() - 100, 100, 100, this);
 
-        for (int i = 0; i <= 7; i++) {
-            balls.add(new Ball(70*i, 0, 25, 25, this));
+        for (int i = 0; i <= (int)(Math.random() * ((6 - 3) + 1)) + 6; i++) {
+            iPosX = (int)(Math.random() * ((getWidth()) + 1));
+            iPosY = (int)(Math.random() * ((-100 +30) + 1)) -30;
+            balls.add(new Ball( iPosX, iPosY, 50, 50, this));
         }
         
         display.getJFrame().addKeyListener(keyManager);
@@ -144,34 +166,51 @@ public class Game implements Runnable {
      */
 
     private void tick() {
-
-        if (!isGameover()) {
         
+        if(player.getLives() == 0)
+        {
+         setGameover(true);   
+        }
+        
+        if (!isGameover()) {
+            player.tick();
             keyManager.tick();
             // avancing player with collision
-            player.tick();
             for (int i = 0; i < balls.size(); i++) {
-                Ball enemy = (Ball) balls.get(i);
-                enemy.tick();
                 
-      
+                balls.get(i).tick();                
+                if(player.intersecta(balls.get(i)))
+                {
+                   balls.get(i).reboot(); 
+                   Assets.squeeze.play();
+                   player.setScore(player.getScore()+100);
+                }
+                
                 if(balls.get(i).isCollision())
-                {  
+                {
+                   balls.get(i).setCollision(false);
+                   
+                   Assets.bomb.play();
                    
                    player.setScore(player.getScore()-20);
+                   
                    setFallen(getFallen()+1);
-                   balls.get(i).reboot();
-                    
+                   
+                   
                   if(getFallen() == 10)
                   {
-                    player.setLives(player.getLives()-1);
+                    player.setLives(player.getLives()-1); 
+                    setFallen(0);
                   }
+                  
+                  
                 }
-               
             }
+        }
+        else {
             
-
-        } 
+           Assets.bomb.play();
+        }
     }
 
     /**
@@ -191,15 +230,32 @@ public class Game implements Runnable {
         } else {
             g = bs.getDrawGraphics();
             g.drawImage(Assets.background, 0, 0, width, height, null);
-            player.render(g);
+            
+            g.setColor(Color.white);
+            
+            g.setFont(new Font("Serif", Font.BOLD, 20));
+            if(!isGameover())
+            {
+              player.render(g);
             for (int i = 0; i < balls.size(); i++) {
                 balls.get(i).render(g);
             }
+        
             for (int i = 1; i <= player.getLives(); i++) {
                 g.drawImage(Assets.lives, 30 * i, 10, 25, 25, null);
             }
+            g.drawString( " " + player.getScore() , 20, 50);
+            }
+            else{
+             
+              g.drawImage(Assets.gameover, this.getWidth()/2, this.getHeight()/2, 600, 450, null);
+              g.drawString( "Score: " + player.getScore() , getWidth()/2, getHeight()/3);
+            }
+            
             bs.show();
+            
             g.dispose();
+        
         }
     }
 

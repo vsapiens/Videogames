@@ -22,7 +22,7 @@ public class Player extends Item {
         this.width = width;
         this.height = height;
         this.game = game;
-        this.speed = 5;
+        this.speed = 10;
         this.collision = false;
         this.score = 0;
         this.lives = 5;
@@ -116,12 +116,19 @@ public class Player extends Item {
         this.speed = speed;
     }
 
-    
+    /**
+     * To get the perimeter of the rectangle of the image of the object
+     * @return Rectangle
+     */
      public Rectangle getPerimetro() {
 
             return new Rectangle(getX(), getY(),getWidth(), getHeight());
         }
-
+     /**
+      * To know if the object intersects another object
+      * @param obj
+      * @return intersects 
+      */
      public boolean intersecta(Ball obj) {
 
             return getPerimetro().intersects(obj.getPerimetro());
@@ -164,7 +171,10 @@ public class Player extends Item {
         }
 
     }
-
+       /**
+     * Renders the player
+     * @param g 
+     */
     @Override
     public void render(Graphics g) {
 

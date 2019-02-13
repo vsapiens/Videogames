@@ -16,6 +16,8 @@ public class Assets {
     public static BufferedImage player;//to store player image
     public static BufferedImage lives; //to store images of live
     public static BufferedImage gameover; //to store images of live
+    public static SoundClip bomb; //to store soundclips of bomb
+    public static SoundClip squeeze; //to store soundclip of collision
     
     /**
      * initializing the images of the game
@@ -25,5 +27,7 @@ public class Assets {
      player = ImageLoader.loadImage("/images/Player.png");
      lives = ImageLoader.loadImage("/images/lives.png"); 
      gameover = ImageLoader.loadImage("/images/gameover.jpg"); 
+     bomb = new SoundClip("/sounds/blip.wav"); 
+     squeeze = new SoundClip("/sounds/squeeze.wav"); 
     }
 }

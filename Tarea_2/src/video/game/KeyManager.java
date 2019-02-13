@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package video.game;
 
 import java.awt.event.KeyEvent;
@@ -20,7 +16,9 @@ public class KeyManager implements KeyListener {
     public boolean right;       // flag to move right the player
     
     private boolean keys[];     // to store all the flags for every key
-    
+/**
+     * To set the key manager of the 256 keys
+     */
     public KeyManager() {
         keys = new boolean[256];
     }

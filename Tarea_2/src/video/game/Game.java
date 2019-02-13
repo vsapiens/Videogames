@@ -29,9 +29,7 @@ public class Game implements Runnable {
     private Enemy enemy;                // to manage the enemy
     private KeyManager keyManager;      // to manage the keyboard
     private MouseManager mouseManager;  // to manage the mouse
-    private boolean gameover;
-
-    private SoundClip bomb;             // to manage the soundclip of the collision             // to manage the lives 
+    private boolean gameover;           // to manage the lives 
 
     @Override
     public void run() {
@@ -69,11 +67,17 @@ public class Game implements Runnable {
         }
         stop();
     }
-
+    /**
+     * To set the state of game over
+     * @return gameover
+     */
     public boolean isGameOver() {
         return gameover;
     }
-
+    /**
+     * To set the status of the gameover
+     * @param gameOver 
+     */
     public void setGameOver(boolean gameOver) {
         this.gameover = gameOver;
     }
@@ -159,6 +163,7 @@ public class Game implements Runnable {
         // avancing player and enemy with collision
         player.tick();
         enemy.tick();
+        //enemy follows the player to intersect
         enemy.follow(player.getX(),player.getY());
 
         if (player.intersecta(enemy) && !isGameOver()) {
@@ -166,9 +171,12 @@ public class Game implements Runnable {
             // substracts one live from player and reboots position of player and enemy
             player.reboot();
             enemy.reboot();
+            //plays the sound of a collision
+            Assets.bomb.play();
+            //sleeps thread to restart positions
+            thread.sleep(1000);
             
-            thread.sleep(2000);
-            
+            //if there are no lives left it sets the game to the final state
             if (player.getLives() == 0) {
                 setGameOver(true);
             }
@@ -189,8 +197,10 @@ public class Game implements Runnable {
             display.getCanvas().createBufferStrategy(3);
         } else {
             g = bs.getDrawGraphics();
+            //draw background
             g.drawImage(Assets.background, 0, 0, width, height, null);
-
+            
+            //while the game is not over render the player, enemies and lives left
             if (!isGameOver()) {
 
                 for (int i = 1; i <= player.getLives(); i++) {
@@ -198,7 +208,9 @@ public class Game implements Runnable {
                 }
                 player.render(g);
                 enemy.render(g);
-            } else {
+            } 
+            // draw the image if the game is over
+            else {
                 g.drawImage(Assets.gameover, 0, 0, width, height, null);
             }
 
@@ -217,7 +229,9 @@ public class Game implements Runnable {
             thread.start();
         }
     }
-
+    /**
+     * stops the thread of the game
+     */
     public synchronized void stop() {
         if (running) {
             running = false;
